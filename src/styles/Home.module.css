@@ -4,10 +4,38 @@
   justify-content: space-between;
   align-items: center;
   margin: auto;
-  padding: 6rem;
+  /* padding: 6rem; */
   min-height: 100vh;
   max-width: 600px;
-  border: 1px solid black;
+  border: 1px solid salmon;
+  background-color: white;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.layout {
+  /* background-color: black; */
+}
+
+.layout_header {
+  background-color: salmon;
+  color: white;
+  min-height: 100px;
+  width: 600px;
+}
+
+.layout_main {
+  background-color: white;
+  color: black;
+}
+
+.account_header {
+  padding: 1rem;
+  display: flex;
+  margin: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .description {
