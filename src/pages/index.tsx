@@ -17,7 +17,6 @@ export default function Home() {
     name: 'Account 1',
     avatar:
       'https://pbs.twimg.com/profile_images/1555669975712632832/JKWnOE1c_400x400.jpg',
-    address: '0xc0deaf6bd3f0c6574a6a625ef2f22f62a5150eab',
     balance: 10,
   };
   return (
@@ -38,10 +37,7 @@ export default function Home() {
               <Send setCurrentView={setCurrentView} />
             ) : null}
             {currentView === 'receive' ? (
-              <Receive
-                setCurrentView={setCurrentView}
-                account_details={account_details}
-              />
+              <Receive setCurrentView={setCurrentView} />
             ) : null}
           </div>
         </Layout>
