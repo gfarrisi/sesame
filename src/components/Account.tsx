@@ -2,8 +2,14 @@ import styles from '@/styles/Home.module.css';
 import Image from 'next/image';
 import React from 'react';
 
+export type AccountDetails = {
+  avatar: string;
+  name: string;
+  address: string;
+};
+
 interface AccountProps {
-  account_details: { avatar: string; name: string };
+  account_details: AccountDetails;
 }
 
 export const Account: React.FunctionComponent<

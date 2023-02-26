@@ -76,6 +76,13 @@
   align-items: center;
   justify-content: center;
 }
+.center {
+  display: flex;
+  flex-direction: column;
+}
+.spacer {
+  padding-top: 10px;
+}
 
 .avatar {
   border-radius: 50px;

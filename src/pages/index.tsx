@@ -13,6 +13,12 @@ export type ViewNames = 'overview' | 'send' | 'receive';
 export default function Home() {
   const [currentView, setCurrentView] = useState<ViewNames>('overview');
 
+  const account_details = {
+    name: 'Account 1',
+    avatar:
+      'https://pbs.twimg.com/profile_images/1555669975712632832/JKWnOE1c_400x400.jpg',
+    address: '0xc0deaf6bd3f0c6574a6a625ef2f22f62a5150eab',
+  };
   return (
     <>
       <Head>
@@ -22,7 +28,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Layout>
+        <Layout account_details={account_details}>
           <div>
             {currentView === 'overview' ? (
               <Overview setCurrentView={setCurrentView} />
@@ -31,7 +37,10 @@ export default function Home() {
               <Send setCurrentView={setCurrentView} />
             ) : null}
             {currentView === 'receive' ? (
-              <Receive setCurrentView={setCurrentView} />
+              <Receive
+                setCurrentView={setCurrentView}
+                account_details={account_details}
+              />
             ) : null}
           </div>
         </Layout>
