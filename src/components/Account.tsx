@@ -5,7 +5,6 @@ import React from 'react';
 export type AccountDetails = {
   avatar: string;
   name: string;
-  address: string;
   balance?: number;
 };
 
