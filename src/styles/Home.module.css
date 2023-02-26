@@ -37,7 +37,7 @@
   color: white;
   min-height: 100px;
   width: 400px;
-  background: linear-gradient(90deg, #f2e6b9, #f67eab);
+  background: linear-gradient(90deg, #f67eab, #f2e6b9);
 }
 
 .layout_main {
