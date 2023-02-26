@@ -18,6 +18,7 @@ export default function Home() {
     avatar:
       'https://pbs.twimg.com/profile_images/1555669975712632832/JKWnOE1c_400x400.jpg',
     address: '0xc0deaf6bd3f0c6574a6a625ef2f22f62a5150eab',
+    balance: 10,
   };
   return (
     <>

@@ -6,7 +6,7 @@
   margin: auto;
   /* padding: 6rem; */
   min-height: 100vh;
-  max-width: 600px;
+  max-width: 400px;
   background-color: whitesmoke;
   color: black;
   font-family: system-ui;
@@ -36,7 +36,7 @@
 .layout_header {
   color: white;
   min-height: 100px;
-  width: 600px;
+  width: 400px;
   background: linear-gradient(90deg, #f2e6b9, #f67eab);
 }
 
