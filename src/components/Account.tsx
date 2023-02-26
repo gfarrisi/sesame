@@ -12,7 +12,13 @@ export const Account: React.FunctionComponent<
   const { account_details } = props;
   return (
     <div className={styles.account_header}>
-      <Image src={account_details.avatar} width={30} height={30} alt="avatar" />
+      <Image
+        src={account_details.avatar}
+        width={35}
+        height={35}
+        alt="avatar"
+        className={styles.avatar}
+      />
       <h2>{account_details.name}</h2>
       <div></div>
     </div>

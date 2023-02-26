@@ -9,7 +9,7 @@ import { Send } from '../components/Send';
 
 const inter = Inter({ subsets: ['latin'] });
 
-type ViewNames = 'overview' | 'send' | 'receive';
+export type ViewNames = 'overview' | 'send' | 'receive';
 export default function Home() {
   const [currentView, setCurrentView] = useState<ViewNames>('overview');
 
@@ -24,9 +24,15 @@ export default function Home() {
       <main className={styles.main}>
         <Layout>
           <div>
-            {currentView === 'overview' ? <Overview /> : null}
-            {currentView === 'send' ? <Send /> : null}
-            {currentView === 'receive' ? <Receive /> : null}
+            {currentView === 'overview' ? (
+              <Overview setCurrentView={setCurrentView} />
+            ) : null}
+            {currentView === 'send' ? (
+              <Send setCurrentView={setCurrentView} />
+            ) : null}
+            {currentView === 'receive' ? (
+              <Receive setCurrentView={setCurrentView} />
+            ) : null}
           </div>
         </Layout>
       </main>

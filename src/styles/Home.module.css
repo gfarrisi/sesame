@@ -7,10 +7,26 @@
   /* padding: 6rem; */
   min-height: 100vh;
   max-width: 600px;
-  border: 1px solid salmon;
-  background-color: white;
+  background-color: whitesmoke;
   color: black;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: system-ui;
+}
+
+.button {
+  background-color: #ff6699;
+  border-radius: 40px;
+  border-width: 0;
+  height: 50px;
+  width: 125px;
+  box-shadow: 0;
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.button:hover {
+  cursor: grab;
 }
 
 .layout {
@@ -18,10 +34,10 @@
 }
 
 .layout_header {
-  background-color: salmon;
   color: white;
   min-height: 100px;
   width: 600px;
+  background: linear-gradient(90deg, #f2e6b9, #f67eab);
 }
 
 .layout_main {
@@ -30,7 +46,7 @@
 }
 
 .account_header {
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   margin: auto;
   flex-direction: row;
@@ -38,6 +54,32 @@
   justify-content: space-between;
 }
 
+.balance_card {
+  padding: 1rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  /* border-color: antiquewhite;
+  border-style: solid;
+  border-width: 3px; */
+  border-radius: 5px;
+  box-shadow: 0px 2px 3px rgba(16, 24, 40, 0.1),
+    0px 2px 3px rgba(16, 24, 40, 0.06);
+}
+
+.align_center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  border-radius: 50px;
+}
 .description {
   display: inherit;
   justify-content: inherit;
