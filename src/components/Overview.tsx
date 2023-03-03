@@ -53,7 +53,7 @@ export const BalanceCard: React.FunctionComponent<
         />
       </div>
       <div style={{ paddingLeft: 10, textAlign: 'right' }}>
-        <h2>{balance}</h2>
+        <h2>{Math.floor(balance * 10 ** 12) / 10 ** 12}</h2>
         <p>{data.currency_name}</p>
       </div>
     </div>
