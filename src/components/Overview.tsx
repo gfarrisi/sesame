@@ -30,9 +30,9 @@ export const SendReceive: React.FunctionComponent<
 
 interface BalanceCardProps {
   data: {
+    networkName: 'mainnet' | 'goerli';
     currency_name: string;
     currency_img_url: string;
-    currency_balance: number;
   };
 }
 
@@ -40,7 +40,7 @@ export const BalanceCard: React.FunctionComponent<
   React.PropsWithChildren<BalanceCardProps>
 > = (props) => {
   const { data } = props;
-  const balance = useBalance();
+  const balance = useBalance(data.networkName);
   return (
     <div className={styles.balance_card}>
       <div className={styles.align_center}>
@@ -73,16 +73,16 @@ export const Overview: React.FunctionComponent<
       <SendReceive setCurrentView={setCurrentView} />
       <BalanceCard
         data={{
+          networkName: 'mainnet',
           currency_name: 'ETH',
-          currency_balance: 1,
           currency_img_url:
             'https://pbs.twimg.com/profile_images/1575128551501664256/5r5jfk2K_400x400.jpg',
         }}
       />
       <BalanceCard
         data={{
+          networkName: 'goerli',
           currency_name: 'Goerli ETH',
-          currency_balance: 1,
           currency_img_url:
             'https://assets.coingecko.com/coins/images/29217/large/goerli-eth.png?1677429831',
         }}
