@@ -1,34 +1,36 @@
-import type { TransactionRequest } from '@ethersproject/abstract-provider';
-import { BigNumber, Transaction, Wallet } from 'ethers';
+import { Transaction, Wallet } from 'ethers';
+import { useEffect, useState } from 'react';
+import { providers } from './use-balance';
+import { Chain } from './use-network';
+import { useWallet } from './use-wallet';
 
-export const formatUSD = (dollarValue: number) => {
-  return dollarValue.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-};
+type UseTransactionHrefArgs = { to: string; value: string; network: Chain };
+export const useTransactionHref = (args: UseTransactionHrefArgs): string => {
+  const { value, to, network } = args;
+  const [nonce, setNonce] = useState(0);
+  const [feeData, setFeeData] = useState<any>({});
+  const { address, privateKey } = useWallet();
 
-export const formatAddress = (address: string, length: number) => {
-  const lengthToTrim = length || 4;
-  return `${address.substring(0, lengthToTrim)}...${address.substring(
-    address.length - lengthToTrim,
-    address.length,
-  )}`;
-};
+  useEffect(() => {
+    const p = async () => {
+      const [_feeData, _nonce] = await Promise.all([
+        providers.goerli.getFeeData(),
+        providers.goerli.getTransactionCount(address),
+      ]);
+      setFeeData(_feeData);
+      setNonce(_nonce);
+    };
+    p();
+  }, []);
 
-type FeeData = any;
-export interface SignTransactionArgs {
-  to: string;
-  privateKey: string;
-  chainId: number;
-  value: BigNumber;
-  feeData: FeeData;
-  nonce: number;
-}
-const phoneNumber = '+14072144335';
-type Transaction = TransactionRequest & { chainId: number };
-export const generateSMSHref = (args: SignTransactionArgs): string => {
-  const { privateKey, chainId, value, to, feeData, nonce } = args;
+  //   return generateSMSHref({
+  //     to,
+  //     privateKey,
+  //     chainId: network.chain_id,
+  //     value: utils.parseEther(value.toString()),
+  //     feeData,
+  //     nonce,
+  //   });
   const wallet = new Wallet(privateKey);
   console.log(wallet);
   const maxPriorityFeePerGas = feeData['maxPriorityFeePerGas']; // Recommended maxPriorityFeePerGas

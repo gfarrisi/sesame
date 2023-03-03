@@ -1,10 +1,8 @@
 import { Chain, chains } from '@/hooks/use-network';
 import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
-import { utils } from 'ethers';
 import { useState } from 'react';
-import { useWallet } from '../hooks/use-wallet';
-import { signTransaction } from '../utils/helpers';
+import { useTransactionHref } from '../hooks/use-transaction-href';
 
 interface SendeProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -19,11 +17,15 @@ export const Send: React.FunctionComponent<
     label: 'Mainnet',
     symbol: 'ETH',
   });
-  const [toAddress, setToAddress] = useState<string>();
+  const [toAddress, setToAddress] = useState<string>('');
   const [etherAmount, setEtherAmount] = useState<string>('0');
   const [showDropDown, setShowDropDown] = useState<boolean>();
   const { setCurrentView } = props;
-  const { address, privateKey } = useWallet();
+  const href = useTransactionHref({
+    value: etherAmount,
+    to: toAddress,
+    network,
+  });
 
   return (
     <div style={{ padding: 10 }}>
@@ -81,24 +83,14 @@ export const Send: React.FunctionComponent<
         <div className={styles['input-group-addon']}>{network?.symbol}</div>
       </div>
       <div style={{ padding: 20 }} className={styles['flex-end']} />
-      <button
-        className={styles.button_white}
-        disabled={!toAddress || etherAmount === '0'}
-        onClick={() => {
-          if (!toAddress) {
-            alert('missing to address');
-            return;
-          }
-          signTransaction({
-            to: toAddress,
-            privateKey,
-            chainId: network.chain_id,
-            value: utils.parseEther(etherAmount.toString()),
-          });
-        }}
-      >
-        Send
-      </button>
+      <a href={href}>
+        <button
+          className={styles.button_white}
+          disabled={!toAddress || etherAmount === '0'}
+        >
+          Send
+        </button>
+      </a>
     </div>
   );
 };
