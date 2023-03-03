@@ -21,7 +21,7 @@ export const chains: Chain[] = [
   {
     chain_id: 5,
     name: 'goerli',
-    label: 'goerli',
+    label: 'Goerli',
   },
 ];
 
