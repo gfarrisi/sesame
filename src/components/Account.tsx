@@ -31,7 +31,6 @@ export const Account: React.FunctionComponent<
         </div>
         <div></div>
       </div>
-      {/* <h2>{account_details.balance}ETH</h2> */}
     </div>
   );
 };

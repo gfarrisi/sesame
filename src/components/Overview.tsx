@@ -2,6 +2,7 @@ import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
 import Image from 'next/image';
 import React from 'react';
+import { useBalance } from '../hooks/use-balance';
 import { formatUSD } from '../utils/helpers';
 
 interface SendReceiveProps {
@@ -41,6 +42,7 @@ export const BalanceCard: React.FunctionComponent<
   React.PropsWithChildren<BalanceCardProps>
 > = (props) => {
   const { data } = props;
+  const balance = useBalance();
   return (
     <div className={styles.balance_card}>
       <div className={styles.align_center}>
@@ -53,7 +55,7 @@ export const BalanceCard: React.FunctionComponent<
         />
         <div style={{ paddingLeft: 10 }}>
           <p>{data.currency_name}</p>
-          <h2>{data.currency_balance}</h2>
+          <h2>{balance}</h2>
         </div>
       </div>
       <h2>{formatUSD(data.currency_value_usd)}</h2>
