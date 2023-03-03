@@ -109,7 +109,8 @@
 }
 .center {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .spacer {
   padding-top: 10px;
@@ -198,7 +199,7 @@
   line-height: 1.5;
   max-width: 30ch;
 }
-
+/* 
 .center {
   display: flex;
   justify-content: center;
@@ -228,7 +229,7 @@
   position: absolute;
   filter: blur(45px);
   transform: translateZ(0);
-}
+} */
 
 .logo,
 .thirteen {
@@ -320,14 +321,14 @@
     margin-bottom: 0.5rem;
   }
 
-  .center {
+  /* .center {
     padding: 8rem 0 6rem;
   }
 
   .center::before {
     transform: none;
     height: 300px;
-  }
+  } */
 
   .description {
     font-size: 0.8rem;
