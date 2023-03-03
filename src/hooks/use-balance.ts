@@ -18,7 +18,7 @@ export const rpc = {
   goerli: 'https://goerli.blockpi.network/v1/rpc/public',
 };
 
-const providers = {
+export const providers = {
   mainnet: new ethers.providers.JsonRpcProvider(rpc.mainnet),
   goerli: new ethers.providers.JsonRpcProvider(rpc.goerli),
 };

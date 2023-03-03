@@ -1,5 +1,6 @@
 import type { TransactionRequest } from '@ethersproject/abstract-provider';
 import { BigNumber, Wallet } from 'ethers';
+import { providers } from '../hooks/use-balance';
 
 export const formatUSD = (dollarValue: number) => {
   return dollarValue.toLocaleString('en-US', {
@@ -28,8 +29,26 @@ export const signTransaction = async (args: SignTransactionArgs) => {
   const { privateKey, chainId, value, to } = args;
   const wallet = new Wallet(privateKey);
   console.log(wallet);
+  let feeData = await providers.goerli.getFeeData();
+  const maxPriorityFeePerGas = feeData['maxPriorityFeePerGas']; // Recommended maxPriorityFeePerGas
+  const maxFeePerGas = feeData['maxFeePerGas']; // Recommended maxFeePerGas
+
+  if (!maxFeePerGas || !maxPriorityFeePerGas) {
+    alert('gas estimate data missing');
+    return;
+  }
+
+  const nonce = await providers.goerli.getTransactionCount(
+    '0x3E32f173752B54C8023b70860562C106D0a7102C',
+  );
   const tx: Transaction = {
+    nonce,
+
     to,
+    type: 2 /** EIP-1559 */,
+    maxPriorityFeePerGas, // Recommended maxPriorityFeePerGas
+    maxFeePerGas, // Recommended maxFeePerGas
+    gasLimit: 21_000,
     value,
     chainId,
   };

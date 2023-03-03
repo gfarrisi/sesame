@@ -13,7 +13,7 @@ const pickRpc = (chainId: 1 | 5): string => {
 const handler = async (req: NextApiRequest, res: NextApiResponse<boolean>) => {
   const message = req.body.Body;
   const sender = req.body.From;
-  console.log({ body: req.body, message, sender });
+  // console.log({ body: req.body, message, sender });
   const [chainId, signedTxn] = message.split(',') as [string, string];
 
   const rpc = pickRpc(Number(chainId) as 1 | 5);
@@ -24,6 +24,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<boolean>) => {
     .then((res) => {
       console.log(res);
       return res;
+    })
+    .catch((err) => {
+      console.error(err);
     });
 
   res.send(true);
