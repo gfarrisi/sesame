@@ -1,4 +1,4 @@
-import { chains } from '@/hooks/use-network';
+import { Chain, chains } from '@/hooks/use-network';
 import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
 import { useState } from 'react';
@@ -11,11 +11,12 @@ interface SendeProps {
 export const Send: React.FunctionComponent<
   React.PropsWithChildren<SendeProps>
 > = (props) => {
-  const [network, setNetwork] = useState<string>();
+  const [network, setNetwork] = useState<Chain>();
   const [showDropDown, setShowDropDown] = useState<boolean>();
   const { setCurrentView } = props;
   const { address } = useWallet();
 
+  console.log({ network });
   return (
     <div style={{ padding: 10 }}>
       <div className={styles['flex-end']}>
@@ -31,7 +32,7 @@ export const Send: React.FunctionComponent<
           className={styles['dropdown-button']}
           onClick={() => setShowDropDown(!showDropDown)}
         >
-          Select your network
+          {network ? network.label : `Select your network`}
         </button>
         {showDropDown && (
           <ul className={styles['dropdown-menu']}>
@@ -40,7 +41,10 @@ export const Send: React.FunctionComponent<
                 <li key={'chain' + i}>
                   <button
                     className={styles.button_transparent}
-                    onClick={() => setNetwork(x.name)}
+                    onClick={() => {
+                      setNetwork(x);
+                      setShowDropDown(false);
+                    }}
                   >
                     {x.label}
                   </button>
@@ -58,8 +62,7 @@ export const Send: React.FunctionComponent<
       <p>Amount:</p>
       <div style={{ padding: 5 }} />
       <input className={styles.input} />
-      <div style={{ padding: 20 }} />
-
+      <div style={{ padding: 20 }} className={styles['flex-end']} />
       <button className={styles.button_white}>Send</button>
     </div>
   );

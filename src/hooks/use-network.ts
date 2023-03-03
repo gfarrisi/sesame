@@ -7,7 +7,7 @@ interface NetworkData {
   chain: string;
 }
 
-type Chain = {
+export type Chain = {
   chain_id: number;
   name: string;
   label: string;
