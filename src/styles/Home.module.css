@@ -31,7 +31,7 @@
 }
 
 .button_unstyled {
-  background-color: whitesmoke;
+  background-color: transparent;
   border-width: 0;
   height: 50px;
   color: black;
@@ -60,7 +60,6 @@
 
 .layout_header {
   color: white;
-  min-height: 100px;
   width: 400px;
 }
 
@@ -70,7 +69,7 @@
 }
 
 .account_header {
-  padding: 2rem;
+  padding: 1rem 2rem;
   display: flex;
   margin: auto;
   flex-direction: row;
@@ -101,6 +100,12 @@
   align-items: center;
   justify-content: center;
 }
+.flex-end {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
 .center {
   display: flex;
   flex-direction: column;
@@ -112,6 +117,53 @@
 .avatar {
   border-radius: 50px;
 }
+
+.dropdown {
+  position: relative;
+}
+.dropdown button {
+  background-color: #555;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dropdown select {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  color: #555;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.dropdown select option {
+  font-size: 16px;
+}
+
+.dropdown select:focus {
+  outline: none;
+}
+
+.dropdown:hover select {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dropdown select option:hover {
+  background-color: #f2f2f2;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;

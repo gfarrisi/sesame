@@ -1,6 +1,20 @@
 import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
 import { useWallet } from '../hooks/use-wallet';
+
+const Dropdown = () => {
+  return (
+    <div className={styles.dropdown}>
+      <select>
+        <option value="">Select an option</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+      </select>
+    </div>
+  );
+};
+
 interface SendeProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
 }
@@ -13,16 +27,14 @@ export const Send: React.FunctionComponent<
 
   return (
     <div style={{ padding: 10 }}>
-      <button
-        className={styles.button_unstyled}
-        onClick={() => setCurrentView('overview')}
-      >
-        ← Back
-      </button>
-      <p>From:</p>
-      <div style={{ padding: 5 }} />
-      <p>{address}</p>
-      <div style={{ padding: 20 }} />
+      <div className={styles['flex-end']}>
+        <button
+          className={styles.button_unstyled}
+          onClick={() => setCurrentView('overview')}
+        >
+          Cancel
+        </button>
+      </div>
       <p>To:</p>
       <div style={{ padding: 5 }} />
       <input className={styles.input} />
@@ -31,6 +43,7 @@ export const Send: React.FunctionComponent<
       <div style={{ padding: 5 }} />
       <input className={styles.input} />
       <div style={{ padding: 20 }} />
+      <Dropdown />
       <button className={styles.button}>Send</button>
     </div>
   );
