@@ -1,13 +1,17 @@
 import { ethers } from 'ethers';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 import { useEffect } from 'react';
 import { useIsOnline } from './use-is-online';
 import { useWallet } from './use-wallet';
 
-const balanceAtom = atom<{ [network: string]: number }>({
-  mainnet: 0,
-  goerli: 0,
-});
+const balancesAtom = atomWithStorage<{ [network: string]: number }>(
+  'wallet-balances',
+  {
+    mainnet: 0,
+    goerli: 0,
+  },
+);
 
 const providers = {
   mainnet: new ethers.providers.JsonRpcProvider('https://eth.llamarpc.com'),
@@ -16,7 +20,7 @@ const providers = {
   ),
 };
 export const useBalance = (network: 'mainnet' | 'goerli'): number => {
-  const [balance, setBalance] = useAtom(balanceAtom);
+  const [balance, setBalance] = useAtom(balancesAtom);
   const wallet = useWallet();
   const isOnline = useIsOnline();
   const { address } = wallet;
