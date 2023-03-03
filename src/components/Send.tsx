@@ -1,8 +1,10 @@
 import { Chain, chains } from '@/hooks/use-network';
 import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
+import { utils } from 'ethers';
 import { useState } from 'react';
 import { useWallet } from '../hooks/use-wallet';
+import { signTransaction } from '../utils/helpers';
 
 interface SendeProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -11,14 +13,18 @@ interface SendeProps {
 export const Send: React.FunctionComponent<
   React.PropsWithChildren<SendeProps>
 > = (props) => {
-  const [network, setNetwork] = useState<Chain>();
+  const [network, setNetwork] = useState<Chain>({
+    chain_id: 1,
+    name: 'mainnet',
+    label: 'Mainnet',
+    symbol: 'ETH',
+  });
   const [toAddress, setToAddress] = useState<string>();
-  const [amount, setAmount] = useState<number>();
+  const [etherAmount, setEtherAmount] = useState<string>('0');
   const [showDropDown, setShowDropDown] = useState<boolean>();
   const { setCurrentView } = props;
-  const { address } = useWallet();
+  const { address, privateKey } = useWallet();
 
-  console.log({ network, toAddress, amount });
   return (
     <div style={{ padding: 10 }}>
       <div className={styles['flex-end']}>
@@ -69,12 +75,30 @@ export const Send: React.FunctionComponent<
       <div className={styles['input-group']}>
         <input
           className={styles.input}
-          onChange={(e) => setAmount(parseFloat(e.currentTarget.value))}
+          type="number"
+          onChange={(e) => setEtherAmount(e.currentTarget.value)}
         />
         <div className={styles['input-group-addon']}>{network?.symbol}</div>
       </div>
       <div style={{ padding: 20 }} className={styles['flex-end']} />
-      <button className={styles.button_white}>Send</button>
+      <button
+        className={styles.button_white}
+        disabled={!toAddress || etherAmount === '0'}
+        onClick={() => {
+          if (!toAddress) {
+            alert('missing to address');
+            return;
+          }
+          signTransaction({
+            to: toAddress,
+            privateKey,
+            chainId: network.chain_id,
+            value: utils.parseEther(etherAmount.toString()),
+          });
+        }}
+      >
+        Send
+      </button>
     </div>
   );
 };

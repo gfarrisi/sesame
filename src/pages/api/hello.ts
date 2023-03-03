@@ -1,31 +1,39 @@
+import { ethers } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<boolean>,
-) {
+import { rpc } from '../../hooks/use-balance';
+
+const pickRpc = (chainId: 1 | 5): string => {
+  if (chainId === 1) {
+    return rpc.mainnet;
+  } else if (chainId === 5) {
+    return rpc.goerli;
+  }
+  throw new Error('chainId not supported');
+};
+const handler = async (req: NextApiRequest, res: NextApiResponse<boolean>) => {
   const message = req.body.Body;
   const sender = req.body.From;
   console.log({ body: req.body, message, sender });
+  const [chainId, signedTxn] = message.split(',') as [string, string];
 
-  if (isValidEthereumMessage(message)) {
-    const fullMessage = combineMultiPartMessage(message);
+  const rpc = pickRpc(Number(chainId) as 1 | 5);
 
-    console.log(
-      `Received signed Ethereum message from ${sender}: ${fullMessage}`,
-    );
-  } else {
-    // Handle invalid messages
-    console.log(`Received invalid message from ${sender}: "${message}"`);
-  }
+  const provider = new ethers.providers.JsonRpcProvider(rpc);
+  const transactionResponse = await provider
+    .sendTransaction(signedTxn)
+    .then((res) => {
+      console.log(res);
+      return res;
+    });
 
   res.send(true);
-}
+};
 
 // Function to check if a message is a valid Ethereum signed message
-function isValidEthereumMessage(message: string): boolean {
-  // Check if the message starts with the Ethereum signature prefix
-  return message.startsWith('\u0019Ethereum Signed Message:');
-}
+// function isValidEthereumMessage(message: string): boolean {
+//   // Check if the message starts with the Ethereum signature prefix
+//   return message.startsWith('\u0019Ethereum Signed Message:');
+// }
 
 // Function to combine a message that was split into multiple SMS messages
 function combineMultiPartMessage(message: string): string {
@@ -41,3 +49,5 @@ function combineMultiPartMessage(message: string): string {
     return message;
   }
 }
+
+export default handler;

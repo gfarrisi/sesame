@@ -13,11 +13,14 @@ const balancesAtom = atomWithStorage<{ [network: string]: number }>(
   },
 );
 
+export const rpc = {
+  mainnet: 'https://eth.llamarpc.com',
+  goerli: 'https://goerli.blockpi.network/v1/rpc/public',
+};
+
 const providers = {
-  mainnet: new ethers.providers.JsonRpcProvider('https://eth.llamarpc.com'),
-  goerli: new ethers.providers.JsonRpcProvider(
-    'https://goerli.blockpi.network/v1/rpc/public',
-  ),
+  mainnet: new ethers.providers.JsonRpcProvider(rpc.mainnet),
+  goerli: new ethers.providers.JsonRpcProvider(rpc.goerli),
 };
 export const useBalance = (network: 'mainnet' | 'goerli'): number => {
   const [balance, setBalance] = useAtom(balancesAtom);
