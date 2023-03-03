@@ -12,11 +12,13 @@ export const Send: React.FunctionComponent<
   React.PropsWithChildren<SendeProps>
 > = (props) => {
   const [network, setNetwork] = useState<Chain>();
+  const [toAddress, setToAddress] = useState<string>();
+  const [amount, setAmount] = useState<number>();
   const [showDropDown, setShowDropDown] = useState<boolean>();
   const { setCurrentView } = props;
   const { address } = useWallet();
 
-  console.log({ network });
+  console.log({ network, toAddress, amount });
   return (
     <div style={{ padding: 10 }}>
       <div className={styles['flex-end']}>
@@ -57,11 +59,20 @@ export const Send: React.FunctionComponent<
       <div style={{ padding: 20 }} />
       <p>To:</p>
       <div style={{ padding: 5 }} />
-      <input className={styles.input} />
+      <input
+        className={styles.input}
+        onChange={(e) => setToAddress(e.currentTarget.value)}
+      />
       <div style={{ padding: 10 }} />
       <p>Amount:</p>
       <div style={{ padding: 5 }} />
-      <input className={styles.input} />
+      <div className={styles['input-group']}>
+        <input
+          className={styles.input}
+          onChange={(e) => setAmount(parseFloat(e.currentTarget.value))}
+        />
+        <div className={styles['input-group-addon']}>{network?.symbol}</div>
+      </div>
       <div style={{ padding: 20 }} className={styles['flex-end']} />
       <button className={styles.button_white}>Send</button>
     </div>

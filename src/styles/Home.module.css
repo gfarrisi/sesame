@@ -79,8 +79,19 @@
   background: #f7f7f7;
   border: 1px solid #ff6699;
   border-radius: 5px;
+  color: black;
+  padding: 5px 5px;
+}
+.input-group {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
+.input-group-addon {
+  right: 10px;
+  position: absolute;
+}
 .layout {
   /* background-color: black; */
 }

@@ -11,17 +11,20 @@ export type Chain = {
   chain_id: number;
   name: string;
   label: string;
+  symbol: string;
 };
 export const chains: Chain[] = [
   {
     chain_id: 1,
     name: 'mainnet',
     label: 'Mainnet',
+    symbol: 'ETH',
   },
   {
     chain_id: 5,
     name: 'goerli',
     label: 'Goerli',
+    symbol: 'GETH',
   },
 ];
 
