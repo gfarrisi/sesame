@@ -76,6 +76,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  color: black;
 }
 
 .balance_card {
