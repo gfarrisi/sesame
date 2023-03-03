@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['pbs.twimg.com', 'nomics.com'],
+    domains: ['pbs.twimg.com', 'nomics.com', 'assets.coingecko.com'],
   },
 };
 

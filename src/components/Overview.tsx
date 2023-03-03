@@ -3,7 +3,6 @@ import styles from '@/styles/Home.module.css';
 import Image from 'next/image';
 import React from 'react';
 import { useBalance } from '../hooks/use-balance';
-import { formatUSD } from '../utils/helpers';
 
 interface SendReceiveProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -34,7 +33,6 @@ interface BalanceCardProps {
     currency_name: string;
     currency_img_url: string;
     currency_balance: number;
-    currency_value_usd: number;
   };
 }
 
@@ -53,12 +51,11 @@ export const BalanceCard: React.FunctionComponent<
           alt={data.currency_name + 'img'}
           className={styles.avatar}
         />
-        <div style={{ paddingLeft: 10 }}>
-          <p>{data.currency_name}</p>
-          <h2>{balance}</h2>
-        </div>
       </div>
-      <h2>{formatUSD(data.currency_value_usd)}</h2>
+      <div style={{ paddingLeft: 10, textAlign: 'right' }}>
+        <h2>{balance}</h2>
+        <p>{data.currency_name}</p>
+      </div>
     </div>
   );
 };
@@ -80,7 +77,14 @@ export const Overview: React.FunctionComponent<
           currency_balance: 1,
           currency_img_url:
             'https://pbs.twimg.com/profile_images/1575128551501664256/5r5jfk2K_400x400.jpg',
-          currency_value_usd: 1614.3,
+        }}
+      />
+      <BalanceCard
+        data={{
+          currency_name: 'Goerli ETH',
+          currency_balance: 1,
+          currency_img_url:
+            'https://assets.coingecko.com/coins/images/29217/large/goerli-eth.png?1677429831',
         }}
       />
     </div>
