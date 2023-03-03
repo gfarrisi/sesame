@@ -18,7 +18,7 @@ export const Receive: React.FunctionComponent<
   return (
     <div style={{ padding: 10 }}>
       <button
-        className={styles.button}
+        className={styles.button_unstyled}
         onClick={() => setCurrentView('overview')}
       >
         ← Back

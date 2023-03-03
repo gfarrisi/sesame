@@ -29,6 +29,30 @@
   cursor: grab;
 }
 
+.button_unstyled {
+  background-color: whitesmoke;
+  border-width: 0;
+  height: 50px;
+  color: black;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.button_unstyled:hover {
+  cursor: grab;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 323.98px;
+  height: 39.23px;
+  background: #f7f7f7;
+  border: 1px solid #ff6699;
+  border-radius: 5px;
+}
+
 .layout {
   /* background-color: black; */
 }
