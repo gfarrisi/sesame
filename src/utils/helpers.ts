@@ -55,10 +55,9 @@ export const signTransaction = async (args: SignTransactionArgs) => {
 
   // Signing a transaction
   const signedTxn = await wallet.signTransaction(tx);
-  console.log(signedTxn);
   const textBody = encodeURIComponent(`${chainId},${signedTxn}`);
-  const isMac = navigator.userAgent.includes('AppleWebKit');
-  const isIphone = navigator.userAgent.match(/iPhone/i);
+  const isMac: boolean = navigator.userAgent.includes('AppleWebKit');
+  const isIphone: boolean = navigator.userAgent.includes('iPhone');
   if (isMac || isIphone) {
     return window.open('sms://' + phoneNumber + `/&body=${textBody}`);
   }
