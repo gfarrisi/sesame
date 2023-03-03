@@ -1,8 +1,8 @@
 import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
-import { formatCurrency } from '@/utils/helpers';
 import Image from 'next/image';
 import React from 'react';
+import { formatUSD } from '../utils/helpers';
 
 interface SendReceiveProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -56,7 +56,7 @@ export const BalanceCard: React.FunctionComponent<
           <h2>{data.currency_balance}</h2>
         </div>
       </div>
-      <h2>{formatCurrency(data.currency_value_usd)}</h2>
+      <h2>{formatUSD(data.currency_value_usd)}</h2>
     </div>
   );
 };

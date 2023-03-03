@@ -1,5 +1,8 @@
-export const formatCurrency = (value: number) => {
-  return `$${parseFloat(value.toString()).toFixed(2).toLocaleString()}`;
+export const formatUSD = (dollarValue: number) => {
+  return dollarValue.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
 };
 
 export const formatAddress = (address: string, length: number) => {
