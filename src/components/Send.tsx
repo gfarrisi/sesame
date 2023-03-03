@@ -1,19 +1,9 @@
+import { chains } from '@/hooks/use-network';
 import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
+import { useState } from 'react';
+import ReactDropdown from 'react-dropdown';
 import { useWallet } from '../hooks/use-wallet';
-
-const Dropdown = () => {
-  return (
-    <div className={styles.dropdown}>
-      <select>
-        <option value="">Select an option</option>
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
-      </select>
-    </div>
-  );
-};
 
 interface SendeProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -22,6 +12,7 @@ interface SendeProps {
 export const Send: React.FunctionComponent<
   React.PropsWithChildren<SendeProps>
 > = (props) => {
+  const [network, setNetwork] = useState<string>();
   const { setCurrentView } = props;
   const { address } = useWallet();
 
@@ -43,8 +34,20 @@ export const Send: React.FunctionComponent<
       <div style={{ padding: 5 }} />
       <input className={styles.input} />
       <div style={{ padding: 20 }} />
-      <Dropdown />
-      <button className={styles.button}>Send</button>
+      <ReactDropdown
+        baseClassName={styles.dropdown}
+        controlClassName={styles.dropdown_control}
+        menuClassName={styles.dropdown_menu}
+        placeholderClassName={styles.dropdown_placeholder}
+        className={styles.dropdown}
+        options={chains.map((x) => {
+          return { label: x.label, value: x.name };
+        })}
+        onChange={(e) => console.log({ e })}
+        value={network}
+        placeholder="Select an option"
+      />
+      {/* <button className={styles.button}>Send</button> */}
     </div>
   );
 };
