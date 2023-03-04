@@ -1,6 +1,5 @@
 import type { TransactionRequest } from '@ethersproject/abstract-provider';
 import { BigNumber, Wallet } from 'ethers';
-import { providers } from '../hooks/use-balance';
 
 export const formatUSD = (dollarValue: number) => {
   return dollarValue.toLocaleString('en-US', {
@@ -17,22 +16,22 @@ export const formatAddress = (address: string, length: number) => {
   )}`;
 };
 
-interface SignTransactionArgs {
+export interface SignTransactionArgs {
   to: string;
   privateKey: string;
   chainId: number;
   value: BigNumber;
   nonce: number;
+  feeData: any;
 }
 const phoneNumber = '+14072144335';
 type Transaction = TransactionRequest & { chainId: number };
 export const signTransaction = async (
   args: SignTransactionArgs,
 ): Promise<string> => {
-  const { privateKey, chainId, value, to, nonce } = args;
+  const { privateKey, chainId, value, to, nonce, feeData } = args;
   const wallet = new Wallet(privateKey);
   console.log(wallet);
-  let feeData = await providers.goerli.getFeeData();
   const maxPriorityFeePerGas = feeData['maxPriorityFeePerGas']; // Recommended maxPriorityFeePerGas
   const maxFeePerGas = feeData['maxFeePerGas']; // Recommended maxFeePerGas
 
