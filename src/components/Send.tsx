@@ -95,7 +95,6 @@ export const Send: React.FunctionComponent<
           Send
         </button>
       </a>
-      <a href="sms:+919999999999,+919999999990?body=Hello World!">Link</a>
     </div>
   );
 };
