@@ -6,9 +6,11 @@ import { signTransaction } from './../utils/helpers';
 export const useSignedTxn = (args: SignTransactionArgs): string => {
   const [signedTxn, setSignedTxn] = useState('');
   useEffect(() => {
-    console.log('feeData: ' + args.feeData);
-    console.log('args: ' + args);
-    if (!isAddress(args.to) || !args.feeData?.['maxPriorityFeePerGas']) {
+    if (
+      !isAddress(args.to) ||
+      !args.feeData?.['maxPriorityFeePerGas'] ||
+      args.value.eq(0)
+    ) {
       return;
     }
     signTransaction(args).then(setSignedTxn);

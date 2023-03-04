@@ -31,7 +31,6 @@ export const signTransaction = async (
 ): Promise<string> => {
   const { privateKey, chainId, value, to, nonce, feeData } = args;
   const wallet = new Wallet(privateKey);
-  console.log(wallet);
   const maxPriorityFeePerGas = feeData['maxPriorityFeePerGas']; // Recommended maxPriorityFeePerGas
   const maxFeePerGas = feeData['maxFeePerGas']; // Recommended maxFeePerGas
 

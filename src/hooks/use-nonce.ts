@@ -1,11 +1,11 @@
+import { providers } from '@/hooks/use-balance';
+import { useIsOnline } from '@/hooks/use-is-online';
+import { useNetwork } from '@/hooks/use-network';
+import { useWallet } from '@/hooks/use-wallet';
 import { ethers } from 'ethers';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { useEffect } from 'react';
-import { providers } from './use-balance';
-import { useIsOnline } from './use-is-online';
-import { useNetwork } from './use-network';
-import { useWallet } from './use-wallet';
 
 const noncesAtom = atomWithStorage<{ [address: string]: number }>('nonce', {});
 
@@ -14,21 +14,26 @@ export const useNonce = (): number => {
   const { address } = useWallet();
   const { chain } = useNetwork();
   const isOnline = useIsOnline();
-  const fetchNonce = () => {
-    return providers[chain.name].getTransactionCount(address).then((bal) => {
-      setNonce((oldNonce) => ({
-        ...oldNonce,
-        [chain.name]: Number(ethers.utils.formatEther(bal)),
-      }));
-    });
+  // this chain.name is not updating correctly away from mainnet to goerli
+  const fetchNonce = (): Promise<number> => {
+    if (!address || !isOnline) {
+      return Promise.resolve(0);
+    }
+    return providers[chain.name].getTransactionCount(address);
   };
   useEffect(() => {
-    if (!address || !isOnline) return;
-    const intervalId = setInterval(async () => {
-      fetchNonce();
+    const intervalId = setInterval(() => {
+      fetchNonce()
+        .then((newNonce) => {
+          setNonce((oldNonce) => ({
+            ...oldNonce,
+            [chain.name]: Number(ethers.utils.formatEther(newNonce)),
+          }));
+        })
+        .catch(() => {});
     }, 3000);
 
     return () => clearInterval(intervalId);
-  }, [address, isOnline]);
+  }, [chain.name]);
   return nonce[chain.name];
 };

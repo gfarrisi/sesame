@@ -1,9 +1,9 @@
+import { useIsOnline } from '@/hooks/use-is-online';
+import { useWallet } from '@/hooks/use-wallet';
 import { ethers } from 'ethers';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { useEffect } from 'react';
-import { useIsOnline } from './use-is-online';
-import { useWallet } from './use-wallet';
 
 const balancesAtom = atomWithStorage<{ [network: string]: number }>(
   'wallet-balances',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { atom, useAtom } from 'jotai';
 
 export const chains = [
   {
@@ -15,8 +15,9 @@ export const chains = [
   },
 ] as const;
 
+const networkAtom = atom<(typeof chains)[number]>(chains[0]);
 export const useNetwork = () => {
-  const [chain, _setChain] = useState<(typeof chains)[number]>(chains[0]);
+  const [chain, _setChain] = useAtom(networkAtom);
   const setChain = (networkName: 'mainnet' | 'goerli') => {
     const newChain = chains.find((chain) => chain.name === networkName);
     if (!newChain) {
