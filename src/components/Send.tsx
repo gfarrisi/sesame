@@ -3,9 +3,10 @@ import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
 import { utils } from 'ethers';
 import { useState } from 'react';
+import { useFeeData } from '../hooks/use-fee-data';
 import { useNonce } from '../hooks/use-nonce';
+import { useSignedTxn } from '../hooks/use-signed-txn';
 import { useWallet } from '../hooks/use-wallet';
-import { signTransaction } from '../utils/helpers';
 
 interface SendeProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -15,13 +16,21 @@ export const Send: React.FunctionComponent<
   React.PropsWithChildren<SendeProps>
 > = (props) => {
   const { chain, setChain } = useNetwork();
-  const [toAddress, setToAddress] = useState<string>();
+  const [toAddress, setToAddress] = useState<string>('');
   const [etherAmount, setEtherAmount] = useState<string>('0');
   const [showDropDown, setShowDropDown] = useState<boolean>();
   const { setCurrentView } = props;
   const { address, privateKey } = useWallet();
-  const [signedTxn, setSignedTxn] = useState('');
+  const feeData = useFeeData();
   const nonce = useNonce();
+  const signedTxn = useSignedTxn({
+    nonce,
+    to: toAddress,
+    privateKey,
+    chainId: chain.chain_id,
+    value: utils.parseEther(etherAmount.toString()),
+    feeData,
+  });
   return (
     <div style={{ padding: 10 }}>
       <div className={styles['flex-end']}>
@@ -78,25 +87,14 @@ export const Send: React.FunctionComponent<
         <div className={styles['input-group-addon']}>{chain.symbol}</div>
       </div>
       <div style={{ padding: 20 }} className={styles['flex-end']} />
-      <button
-        className={styles.button_white}
-        disabled={!toAddress || etherAmount === '0'}
-        onClick={() => {
-          if (!toAddress) {
-            alert('missing to address');
-            return;
-          }
-          signTransaction({
-            nonce,
-            to: toAddress,
-            privateKey,
-            chainId: chain.chain_id,
-            value: utils.parseEther(etherAmount.toString()),
-          });
-        }}
-      >
-        Send
-      </button>
+      <a href={signedTxn}>
+        <button
+          className={styles.button_white}
+          disabled={!toAddress || etherAmount === '0'}
+        >
+          Send
+        </button>
+      </a>
       <a href="sms:+919999999999,+919999999990?body=Hello World!">Link</a>
     </div>
   );
