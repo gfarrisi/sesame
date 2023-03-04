@@ -21,7 +21,7 @@ export const rpc = {
 export const providers = {
   mainnet: new ethers.providers.JsonRpcProvider(rpc.mainnet),
   goerli: new ethers.providers.JsonRpcProvider(rpc.goerli),
-};
+} as const;
 export const useBalance = (network: 'mainnet' | 'goerli'): number => {
   const [balance, setBalance] = useAtom(balancesAtom);
   const wallet = useWallet();

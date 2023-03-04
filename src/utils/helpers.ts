@@ -22,11 +22,14 @@ interface SignTransactionArgs {
   privateKey: string;
   chainId: number;
   value: BigNumber;
+  nonce: number;
 }
 const phoneNumber = '+14072144335';
 type Transaction = TransactionRequest & { chainId: number };
-export const signTransaction = async (args: SignTransactionArgs) => {
-  const { privateKey, chainId, value, to } = args;
+export const signTransaction = async (
+  args: SignTransactionArgs,
+): Promise<string> => {
+  const { privateKey, chainId, value, to, nonce } = args;
   const wallet = new Wallet(privateKey);
   console.log(wallet);
   let feeData = await providers.goerli.getFeeData();
@@ -35,12 +38,9 @@ export const signTransaction = async (args: SignTransactionArgs) => {
 
   if (!maxFeePerGas || !maxPriorityFeePerGas) {
     alert('gas estimate data missing');
-    return;
+    return '';
   }
 
-  const nonce = await providers.goerli.getTransactionCount(
-    '0x3E32f173752B54C8023b70860562C106D0a7102C',
-  );
   const tx: Transaction = {
     nonce,
 
@@ -59,10 +59,12 @@ export const signTransaction = async (args: SignTransactionArgs) => {
   const isMac: boolean = navigator.userAgent.includes('AppleWebKit');
   const isIphone: boolean = navigator.userAgent.includes('iPhone');
   if (isMac || isIphone) {
-    return window.open('sms://' + phoneNumber + `/&body=${textBody}`);
+    return 'sms://' + phoneNumber + `/&body=${textBody}`;
   }
   if (navigator.userAgent.match(/Android/i)) {
-    return alert(`${navigator.userAgent} not supported`);
+    alert(`${navigator.userAgent} not supported`);
+    return '';
     // window.open('sms://' + phoneNumber + '/');
   }
+  return '';
 };

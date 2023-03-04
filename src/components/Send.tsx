@@ -1,8 +1,9 @@
-import { Chain, chains } from '@/hooks/use-network';
+import { chains, useNetwork } from '@/hooks/use-network';
 import { ViewNames } from '@/pages';
 import styles from '@/styles/Home.module.css';
 import { utils } from 'ethers';
 import { useState } from 'react';
+import { useNonce } from '../hooks/use-nonce';
 import { useWallet } from '../hooks/use-wallet';
 import { signTransaction } from '../utils/helpers';
 
@@ -13,18 +14,14 @@ interface SendeProps {
 export const Send: React.FunctionComponent<
   React.PropsWithChildren<SendeProps>
 > = (props) => {
-  const [network, setNetwork] = useState<Chain>({
-    chain_id: 1,
-    name: 'mainnet',
-    label: 'Mainnet',
-    symbol: 'ETH',
-  });
+  const { chain, setChain } = useNetwork();
   const [toAddress, setToAddress] = useState<string>();
   const [etherAmount, setEtherAmount] = useState<string>('0');
   const [showDropDown, setShowDropDown] = useState<boolean>();
   const { setCurrentView } = props;
   const { address, privateKey } = useWallet();
-
+  const [signedTxn, setSignedTxn] = useState('');
+  const nonce = useNonce();
   return (
     <div style={{ padding: 10 }}>
       <div className={styles['flex-end']}>
@@ -40,7 +37,7 @@ export const Send: React.FunctionComponent<
           className={styles['dropdown-button']}
           onClick={() => setShowDropDown(!showDropDown)}
         >
-          {network ? network.label : `Select your network`}
+          {chain.label}
         </button>
         {showDropDown && (
           <ul className={styles['dropdown-menu']}>
@@ -50,7 +47,7 @@ export const Send: React.FunctionComponent<
                   <button
                     className={styles.button_transparent}
                     onClick={() => {
-                      setNetwork(x);
+                      setChain(x.name);
                       setShowDropDown(false);
                     }}
                   >
@@ -78,7 +75,7 @@ export const Send: React.FunctionComponent<
           type="number"
           onChange={(e) => setEtherAmount(e.currentTarget.value)}
         />
-        <div className={styles['input-group-addon']}>{network?.symbol}</div>
+        <div className={styles['input-group-addon']}>{chain.symbol}</div>
       </div>
       <div style={{ padding: 20 }} className={styles['flex-end']} />
       <button
@@ -90,9 +87,10 @@ export const Send: React.FunctionComponent<
             return;
           }
           signTransaction({
+            nonce,
             to: toAddress,
             privateKey,
-            chainId: network.chain_id,
+            chainId: chain.chain_id,
             value: utils.parseEther(etherAmount.toString()),
           });
         }}

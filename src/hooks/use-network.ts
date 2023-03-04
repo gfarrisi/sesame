@@ -1,19 +1,6 @@
 import { useState } from 'react';
 
-const DEFAULT_NETWORK = 'mainnet';
-const NETWORK_DATA_KEY = 'sesame-network';
-
-interface NetworkData {
-  chain: string;
-}
-
-export type Chain = {
-  chain_id: number;
-  name: string;
-  label: string;
-  symbol: string;
-};
-export const chains: Chain[] = [
+export const chains = [
   {
     chain_id: 1,
     name: 'mainnet',
@@ -26,37 +13,21 @@ export const chains: Chain[] = [
     label: 'Goerli',
     symbol: 'GETH',
   },
-];
+] as const;
 
-export const useNetwork = (network = DEFAULT_NETWORK) => {
-  const [chain, setChain] = useState<string>('');
-
-  //   useEffect(() => {
-  //     const storedData = localStorage.getItem(NETWORK_DATA_KEY);
-  //     if (storedData) {
-  //       const chainData = JSON.parse(storedData) as NetworkData;
-  //       setChain(chainData.chain);
-  //     } else {
-  //       const networkData = {
-  //         chain: network,
-  //       };
-  //       localStorage.setItem(NETWORK_DATA_KEY, JSON.stringify(networkData));
-  //       setChain(network);
-  //     }
-  //   }, []);
+export const useNetwork = () => {
+  const [chain, _setChain] = useState<(typeof chains)[number]>(chains[0]);
+  const setChain = (networkName: 'mainnet' | 'goerli') => {
+    const newChain = chains.find((chain) => chain.name === networkName);
+    if (!newChain) {
+      throw new Error(`Chain "${networkName}" not found`);
+    }
+    _setChain(newChain);
+  };
 
   return {
     chain,
     chains,
+    setChain,
   };
 };
-
-type Network = {
-  chain: number;
-};
-
-export function useSwitchNetwork(networkSwitch: { chain: number }) {
-  return {
-    chains,
-  };
-}
