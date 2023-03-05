@@ -48,7 +48,6 @@ export const useWallet = (password = DEFAULT_PASSWORD) => {
     }
   }, []);
 
-  console.log({ address });
   return {
     address,
     privateKey,

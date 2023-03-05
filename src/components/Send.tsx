@@ -68,6 +68,7 @@ export const Send: React.FunctionComponent<
       <div style={{ padding: 5 }} />
       <input
         className={styles.input}
+        value={toAddress}
         onChange={(e) => setToAddress(e.currentTarget.value)}
       />
       <div style={{ padding: 10 }} />
@@ -77,7 +78,11 @@ export const Send: React.FunctionComponent<
         <input
           className={styles.input}
           type="number"
-          onChange={(e) => setEtherAmount(e.currentTarget.value)}
+          value={etherAmount}
+          onChange={(e) => {
+            const { value } = e.target;
+            setEtherAmount(value);
+          }}
         />
         <div className={styles['input-group-addon']}>{chain.symbol}</div>
       </div>
