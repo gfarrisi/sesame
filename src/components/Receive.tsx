@@ -78,7 +78,7 @@ export const Receive: React.FunctionComponent<
       <div style={{ height: 40 }} />
       <div
         style={{
-          backgroundColor: '#FFFFFF' + '50',
+          backgroundColor: '#FFFFFF' + '40',
           marginLeft: 45,
           marginRight: 45,
           padding: 5,
