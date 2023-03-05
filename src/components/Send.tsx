@@ -63,31 +63,54 @@ export const Send: React.FunctionComponent<
           </ul>
         )}
       </div>
-      <div style={{ padding: 20 }} />
-      <p>To:</p>
-      <div style={{ padding: 5 }} />
-      <input
-        className={styles.input}
-        value={toAddress}
-        onChange={(e) => setToAddress(e.currentTarget.value)}
-      />
       <div style={{ padding: 10 }} />
-      <p>Amount:</p>
-      <div style={{ padding: 5 }} />
-      <div className={styles['input-group']}>
+      <div style={{ position: 'relative' }}>
+        <p style={{ position: 'absolute', top: 25, left: 20, fontSize: 12 }}>
+          Send to
+        </p>
+        {/* <div style={{
+          position: 'absolute', 
+          bottom: 12, left: 15, right: 15, zIndex: 100, height: 1, backgroundColor: 'lightgrey'}}/> */}
+        <div style={{ padding: 5 }} />
         <input
           className={styles.input}
-          type="number"
-          value={etherAmount}
-          onChange={(e) => {
-            const { value } = e.target;
-            setEtherAmount(value);
-          }}
+          value={toAddress}
+          onChange={(e) => setToAddress(e.currentTarget.value)}
         />
-        <div className={styles['input-group-addon']}>{chain.symbol}</div>
       </div>
-      <div style={{ padding: 20 }} className={styles['flex-end']} />
-      <a href={signedTxn}>
+      <div style={{ padding: 10 }} />
+      <div style={{ position: 'relative' }}>
+        <p
+          style={{
+            position: 'absolute',
+            top: 25,
+            left: 20,
+            fontSize: 12,
+            color: 'black',
+            zIndex: 5,
+          }}
+        >
+          Amount
+        </p>
+        {/* <div style={{
+          position: 'absolute', 
+          bottom: 12, left: 15, right: 15, zIndex: 100, height: 1, backgroundColor: 'lightgrey'}}/> */}
+        <div style={{ padding: 5 }} />
+        <div className={styles['input-group']}>
+          <input
+            className={styles.input}
+            // type="number"3
+            value={etherAmount}
+            onChange={(e) => {
+              const { value } = e.target;
+              setEtherAmount(value);
+            }}
+          />
+          <div className={styles['input-group-addon']}>{chain.symbol}</div>
+        </div>
+      </div>
+      <div style={{ padding: 20 }} />
+      <a href={signedTxn} className={styles['flex-end']}>
         <button
           className={styles.button_white}
           disabled={!toAddress || etherAmount === '0'}
