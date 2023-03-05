@@ -109,6 +109,9 @@ export const Account: React.FunctionComponent<
       <div className={styles.account_header}>
         <button
           className={styles.button_transparent}
+          style={{
+            padding: 10,
+          }}
           onClick={() => (showMenu ? setShowMenu(false) : setShowMenu(true))}
         >
           {showMenu ? (

@@ -23,7 +23,7 @@ export const Copy: React.FunctionComponent<
     setShowCopied(true);
     setTimeout(() => {
       setShowCopied(false);
-    }, 5000); // 5000 milliseconds = 5 seconds
+    }, 1500);
   };
   console.log({ showCopied });
 
@@ -32,18 +32,22 @@ export const Copy: React.FunctionComponent<
       {showCopied && (
         <div
           style={{
-            backgroundColor: 'white',
+            backgroundColor: 'whitesmoke',
             position: 'absolute',
             top: -20,
             right: -10,
             borderRadius: 5,
-            padding: 5,
+            padding: 8,
           }}
         >
           Copied!
         </div>
       )}
-      <button onClick={() => copyToClipboard()} className={copyButtonStyles}>
+      <button
+        onClick={() => copyToClipboard()}
+        className={copyButtonStyles}
+        style={{ width: '100%' }}
+      >
         {children}
       </button>
     </div>
@@ -71,9 +75,17 @@ export const Receive: React.FunctionComponent<
           style={{ borderRadius: 5, backgroundColor: 'white', padding: 10 }}
         />
       </div>
-      <div className={styles.spacer} />
-      <div className={styles.spacer} />
-      <div className={styles.center}>
+      <div style={{ height: 40 }} />
+      <div
+        style={{
+          backgroundColor: '#FFFFFF' + '50',
+          marginLeft: 45,
+          marginRight: 45,
+          padding: 5,
+          borderRadius: 5,
+        }}
+        className={styles.center}
+      >
         <Copy
           copyText={address}
           copyButtonStyles={`${styles.button_transparent}`}
