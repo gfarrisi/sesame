@@ -45,8 +45,14 @@ export const signTransaction = async (
   }
 
   if (maxPriorityFeePerGas instanceof BigNumber) {
-    maxPriorityFeePerGas = maxPriorityFeePerGas.mul(1.05);
-    maxFeePerGas = maxFeePerGas.mul(1.05);
+    try {
+      console.log(maxPriorityFeePerGas.toString());
+      maxPriorityFeePerGas = maxPriorityFeePerGas.add(10_000);
+      maxFeePerGas = maxFeePerGas.add(10_000);
+    } catch {
+      console.log({ maxPriorityFeePerGas, maxFeePerGas });
+      return '';
+    }
   }
   const tx: Transaction = {
     nonce,

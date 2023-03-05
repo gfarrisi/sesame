@@ -17,7 +17,10 @@ export const chains = [
     symbol: 'GETH',
     logo_url:
       'https://assets.coingecko.com/coins/images/29217/small/goerli-eth.png',
-    rpcUrls: ['https://goerli.blockpi.network/v1/rpc/public'],
+    rpcUrls: [
+      // 'http://127.0.0.1:8545',
+      'https://goerli.blockpi.network/v1/rpc/public',
+    ],
   },
   {
     chain_id: 137,
