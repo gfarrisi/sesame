@@ -66,8 +66,7 @@
   background-color: transparent;
   border-width: 0;
   color: #2c293e;
-  padding: 10px;
-  height: 40px;
+  /* height: 40px; */
 }
 
 .button_unstyled:hover {
@@ -171,6 +170,7 @@
 .flex {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .spacer {
