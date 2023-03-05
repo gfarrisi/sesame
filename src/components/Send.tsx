@@ -7,6 +7,7 @@ import { useFeeData } from '../hooks/use-fee-data';
 import { useNonce } from '../hooks/use-nonce';
 import { useSignedTxn } from '../hooks/use-signed-txn';
 import { useWallet } from '../hooks/use-wallet';
+import { BackTitle } from './Menu';
 
 interface SendeProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -33,14 +34,8 @@ export const Send: React.FunctionComponent<
   });
   return (
     <div style={{ padding: 10 }}>
-      <div className={styles['flex-end']}>
-        <button
-          className={styles.button_unstyled}
-          onClick={() => setCurrentView('overview')}
-        >
-          Cancel
-        </button>
-      </div>
+      <BackTitle title={'Send'} onBack={() => setCurrentView('overview')} />
+      <div style={{ height: 20 }} />
       <div className={styles.dropdown}>
         <button
           className={styles['dropdown-button']}
