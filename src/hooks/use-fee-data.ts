@@ -22,7 +22,7 @@ const initialFeeData: AllFeeData = chains.reduce<Record<ChainName, FeeData>>(
 );
 
 const feeDataAtom = atomWithStorage('fee-data', initialFeeData);
-export const useFeeData = (): FeeData | null => {
+export const useFeeData = (): FeeData => {
   const [feeData, setFeeData] = useAtom(feeDataAtom);
   const { chain } = useNetwork();
   const isOnline = useIsOnline();

@@ -22,23 +22,30 @@ export interface SignTransactionArgs {
   chainId: number;
   value: BigNumber;
   nonce: number;
-  feeData: any;
+  feeData: Partial<{
+    maxPriorityFeePerGas: BigNumber;
+    maxFeePerGas: BigNumber;
+  }>;
 }
 const phoneNumber = '+14072144335';
-type Transaction = TransactionRequest & { chainId: number };
+type Transaction = TransactionRequest & {
+  chainId: number;
+};
 export const signTransaction = async (
   args: SignTransactionArgs,
 ): Promise<string> => {
   const { privateKey, chainId, value, to, nonce, feeData } = args;
   const wallet = new Wallet(privateKey);
-  const maxPriorityFeePerGas = feeData['maxPriorityFeePerGas']; // Recommended maxPriorityFeePerGas
-  const maxFeePerGas = feeData['maxFeePerGas']; // Recommended maxFeePerGas
+  let maxPriorityFeePerGas = feeData['maxPriorityFeePerGas']; // Recommended maxPriorityFeePerGas
+  let maxFeePerGas = feeData['maxFeePerGas']; // Recommended maxFeePerGas
 
   if (!maxFeePerGas || !maxPriorityFeePerGas) {
     alert('gas estimate data missing');
     return '';
   }
 
+  maxPriorityFeePerGas = maxPriorityFeePerGas && maxPriorityFeePerGas.mul(0.05);
+  maxFeePerGas = maxFeePerGas && maxFeePerGas.mul(0.05);
   const tx: Transaction = {
     nonce,
 
