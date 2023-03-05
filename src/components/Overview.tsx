@@ -69,7 +69,7 @@ export const Overview: React.FunctionComponent<
 > = (props) => {
   const { setCurrentView } = props;
   return (
-    <div style={{ paddingTop: 30 }}>
+    <div style={{ paddingTop: 10 }}>
       <SendReceive setCurrentView={setCurrentView} />
       <BalanceCard
         data={{
