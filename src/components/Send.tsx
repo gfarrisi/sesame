@@ -22,7 +22,7 @@ export const Send: React.FunctionComponent<
   const { setCurrentView } = props;
   const { address, privateKey } = useWallet();
   const feeData = useFeeData();
-  const nonce = useNonce();
+  const { nonce, incrementNonce } = useNonce();
   const signedTxn = useSignedTxn({
     nonce,
     to: toAddress,
@@ -91,6 +91,7 @@ export const Send: React.FunctionComponent<
         <button
           className={styles.button_white}
           disabled={!toAddress || etherAmount === '0'}
+          onClick={incrementNonce}
         >
           Send
         </button>

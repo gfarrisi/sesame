@@ -1,10 +1,10 @@
-import { providers } from '@/hooks/use-balance';
-import { useIsOnline } from '@/hooks/use-is-online';
 import { useNetwork } from '@/hooks/use-network';
 import { BigNumber } from 'ethers';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { useEffect } from 'react';
+import { providers } from './use-balance';
+import { useIsOnline } from './use-is-online';
 
 type FeeData = Partial<{
   lastBaseFeePerGas: BigNumber;

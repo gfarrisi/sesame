@@ -51,7 +51,6 @@ export const signTransaction = async (
     chainId,
   };
 
-  // Signing a transaction
   const signedTxn = await wallet.signTransaction(tx);
   const textBody = encodeURIComponent(`${chainId},${signedTxn}`);
   const isMac: boolean = navigator.userAgent.includes('AppleWebKit');

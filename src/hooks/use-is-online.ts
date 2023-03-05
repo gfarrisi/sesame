@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { atom, useAtom } from 'jotai';
+import { useEffect } from 'react';
 
+const isOnlineAtom = atom(true);
 export const useIsOnline = () => {
-  const [online, setOnline] = useState<boolean>(
-    typeof navigator !== 'undefined' && navigator.onLine,
-  );
+  const [online, setOnline] = useAtom(isOnlineAtom);
 
   useEffect(() => {
     const handleOnline = () => setOnline(true);
