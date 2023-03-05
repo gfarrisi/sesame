@@ -1,9 +1,9 @@
-import { useNetwork } from '@/hooks/use-network';
+import { ChainName, chains, useNetwork } from '@/hooks/use-network';
 import { BigNumber } from 'ethers';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { useEffect } from 'react';
-import { providers } from './use-balance';
+import { providersByChainName } from './use-balance';
 import { useIsOnline } from './use-is-online';
 
 type FeeData = Partial<{
@@ -12,18 +12,22 @@ type FeeData = Partial<{
   maxPriorityFeePerGas: BigNumber;
   gasPrice: BigNumber;
 }>;
-export type AllFeeData = Record<'mainnet' | 'goerli', FeeData>;
-const feeDataAtom = atomWithStorage<AllFeeData>('fee-data', {
-  mainnet: {},
-  goerli: {},
-});
+export type AllFeeData = Record<ChainName, FeeData>;
+const initialFeeData: AllFeeData = chains.reduce<Record<ChainName, FeeData>>(
+  (acc, chain) => {
+    acc[chain.name] = {};
+    return acc;
+  },
+  {} as Record<ChainName, FeeData>,
+);
 
+const feeDataAtom = atomWithStorage('fee-data', initialFeeData);
 export const useFeeData = (): FeeData | null => {
   const [feeData, setFeeData] = useAtom(feeDataAtom);
   const { chain } = useNetwork();
   const isOnline = useIsOnline();
   const fetchFeeData = () => {
-    return providers[chain.name].getFeeData().then((_feeData) => {
+    return providersByChainName[chain.name].getFeeData().then((_feeData) => {
       return setFeeData((oldData) => ({ ...oldData, [chain.name]: _feeData }));
     });
   };

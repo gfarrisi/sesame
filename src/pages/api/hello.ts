@@ -1,23 +1,18 @@
-import { ethers } from 'ethers';
+import { providers } from 'ethers';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { rpc } from '../../hooks/use-balance';
+import { ChainId } from '../../hooks/use-network';
+import { providersByChainId } from './../../hooks/use-balance';
 
-const pickRpc = (chainId: 1 | 5): string => {
-  if (chainId === 1) {
-    return rpc.mainnet;
-  } else if (chainId === 5) {
-    return rpc.goerli;
-  }
-  throw new Error('chainId not supported');
+const pickProvider = (chainId: ChainId): providers.JsonRpcProvider => {
+  return providersByChainId[chainId];
 };
 const handler = async (req: NextApiRequest, res: NextApiResponse<boolean>) => {
   const message = req.body.Body;
   const sender = req.body.From;
   const [chainId, signedTxn] = message.split(',') as [string, string];
 
-  const rpc = pickRpc(Number(chainId) as 1 | 5);
+  const provider = pickProvider(Number(chainId) as ChainId);
 
-  const provider = new ethers.providers.JsonRpcProvider(rpc);
   const transactionResponse = await provider
     .sendTransaction(signedTxn)
     .then((res) => {
