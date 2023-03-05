@@ -44,8 +44,10 @@ export const signTransaction = async (
     return '';
   }
 
-  maxPriorityFeePerGas = maxPriorityFeePerGas && maxPriorityFeePerGas.mul(0.05);
-  maxFeePerGas = maxFeePerGas && maxFeePerGas.mul(0.05);
+  if (maxPriorityFeePerGas instanceof BigNumber) {
+    maxPriorityFeePerGas = maxPriorityFeePerGas.mul(1.05);
+    maxFeePerGas = maxFeePerGas.mul(1.05);
+  }
   const tx: Transaction = {
     nonce,
 
