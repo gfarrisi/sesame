@@ -3,6 +3,7 @@ import styles from '@/styles/Home.module.css';
 import Image from 'next/image';
 import React from 'react';
 import { useBalance } from '../hooks/use-balance';
+import { ChainName, chains } from '../hooks/use-network';
 
 interface SendReceiveProps {
   setCurrentView: React.Dispatch<React.SetStateAction<ViewNames>>;
@@ -30,7 +31,7 @@ export const SendReceive: React.FunctionComponent<
 
 interface BalanceCardProps {
   data: {
-    networkName: 'mainnet' | 'goerli';
+    networkName: ChainName;
     currency_name: string;
     currency_img_url: string;
   };
@@ -71,22 +72,18 @@ export const Overview: React.FunctionComponent<
   return (
     <div style={{ paddingTop: 30 }}>
       <SendReceive setCurrentView={setCurrentView} />
-      <BalanceCard
-        data={{
-          networkName: 'mainnet',
-          currency_name: 'ETH',
-          currency_img_url:
-            'https://pbs.twimg.com/profile_images/1575128551501664256/5r5jfk2K_400x400.jpg',
-        }}
-      />
-      <BalanceCard
-        data={{
-          networkName: 'goerli',
-          currency_name: 'Goerli ETH',
-          currency_img_url:
-            'https://assets.coingecko.com/coins/images/29217/large/goerli-eth.png?1677429831',
-        }}
-      />
+      {chains.map((chain) => {
+        return (
+          <BalanceCard
+            key={chain.chain_id}
+            data={{
+              networkName: chain.name,
+              currency_name: chain.symbol,
+              currency_img_url: chain.logo_url,
+            }}
+          />
+        );
+      })}
     </div>
   );
 };

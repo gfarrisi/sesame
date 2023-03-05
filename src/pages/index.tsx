@@ -1,13 +1,10 @@
 import { Layout } from '@/components/Layout';
 import styles from '@/styles/Home.module.css';
-import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import { useState } from 'react';
 import { Overview } from '../components/Overview';
 import { Receive } from '../components/Receive';
 import { Send } from '../components/Send';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export type ViewNames = 'overview' | 'send' | 'receive';
 export default function Home() {

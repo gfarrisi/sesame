@@ -1,10 +1,10 @@
-import { providers } from '@/hooks/use-balance';
 import { useIsOnline } from '@/hooks/use-is-online';
 import { useNetwork } from '@/hooks/use-network';
 import { useWallet } from '@/hooks/use-wallet';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { useEffect } from 'react';
+import { providersByChainName } from './use-balance';
 
 const noncesAtom = atomWithStorage<{ [address: string]: number }>('nonces', {});
 
@@ -15,7 +15,7 @@ export const useNonce = () => {
   const isOnline = useIsOnline();
   // this chain.name is not updating correctly away from mainnet to goerli
   const fetchNonce = (): Promise<number> => {
-    return providers[chain.name].getTransactionCount(address);
+    return providersByChainName[chain.name].getTransactionCount(address);
   };
   const incrementNonce = () =>
     setNonces((oldNonce) => ({
